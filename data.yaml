@@ -1,0 +1,14 @@
+path: ./dataset
+train: images/train
+val: images/val
+test: images/test
+
+nc: 7
+names:
+  0: Tuna
+  1: Agam
+  2: Hamour
+  3: Hamra
+  4: Parrotfish
+  5: Salmon
+  6: Tilapia

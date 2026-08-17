@@ -1,0 +1,37 @@
+import os
+import glob
+from ultralytics import YOLO
+
+# --- 1. المسارات الجديدة ---
+# مسار الموديل اللي تدرب وخلص (تأكد من رقم المجلد train_final3)
+model_path = r'C:\Users\Administrator\Desktop\Fish_Project_New11\runs\train_final3\weights\best.pt'
+
+# مسار مجلد الصور اللي تبي تختبرها
+input_folder = r'C:\Users\Administrator\Desktop\New folder (21)\الاسماك - نسخة\مجلد جديد'
+
+# مكان حفظ النتائج (بيسوي مجلد جديد باسم test_results)
+output_folder = r'C:\Users\Administrator\Desktop\Fish_Project_New11\test_results'
+
+# --- 2. تشغيل الموديل ---
+# تحميل الموديل
+model = YOLO(model_path)
+
+# التأكد من وجود مجلد المخرجات
+os.makedirs(output_folder, exist_ok=True)
+
+# جلب كل الصور من المجلد (jpg, png, jpeg)
+image_files = []
+for ext in ('*.jpg', '*.jpeg', '*.png'):
+    image_files.extend(glob.glob(os.path.join(input_folder, ext)))
+
+if not image_files:
+    print(f"⚠️ ما لقيت ولا صورة في المجلد: {input_folder}")
+else:
+    print(f"🚀 جاري فحص {len(image_files)} صورة... ازهلها!")
+    
+    # التنبؤ وحفظ الصور
+    results = model.predict(source=input_folder, save=True, project=output_path_base, name="inference_test")
+    
+    # ملاحظة: YOLOv8 بيحفظ النتائج تلقائياً في مجلد اسمه runs/detect/predict داخل مسار مشروعك
+    print(f"\n✅ تم الفحص! النتائج انحفظت في مجلد الـ runs داخل مشروعك الجديد.")
+    print(f"روح للمسار هذا وشف الصور: C:\Users\Administrator\Desktop\Fish_Project_New11\runs\detect\predict")
